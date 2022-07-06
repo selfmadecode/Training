@@ -2,6 +2,7 @@
 using ALGOnDS.Excercise;
 using ALGOnDS.Excercise.Sorting;
 using ALGOnDS.Generics;
+using ALGOnDS.LINQ;
 using ALGOnDS.Timing;
 using System;
 using System.Collections;
@@ -15,93 +16,13 @@ namespace ALGOnDS
     {
         static void Main(string[] args)
         {
-            // 0 => 12am, 4 => am, 12 => 12pm, 15 => 3pm
-            int hour = int.Parse(Console.ReadLine());
-            int equivalent = 0;
-            
-            if (hour == 0)
-                Console.WriteLine("12am");
-            if (hour == 12)
-                Console.WriteLine("12pm");
-            if(hour > 12)
-            {
-                // 3pm => 15-12 = 3
-                equivalent = hour - 12;
-                Console.WriteLine(equivalent + "pm");
-            }
-            else
-            {
-                Console.Write(hour + "am");
-            }
+            //PlayGround.ExceptEx.ExceptUsingComparer();
 
+            // PlayGround.SequenceEx.SequenceEqualUsingComparer();
 
-
-
-
-
-
-
-
-
-
-
-
-
-            string password = "";//Dim password AS string;
-
-            password = Console.ReadLine();
-
-            if(password == "Secret")
-            {
-                Console.WriteLine("Welcome");
-            }
-            else
-            {
-                Console.WriteLine("Not welcome");
-            }
-
-            //End If
+            PlayGround.UnionEx.UnionUsingComparer();
 
             Console.ReadLine();
-
-
-
-
-
-
-
-
-
-            int kilometers; // Dim kilometers As Integer
-            int passengers; // Dim passengers As Integer
-
-            double taxiFare = 0; // Dim taxiFare As Integer
-
-            kilometers = int.Parse(Console.ReadLine());
-            passengers = int.Parse(Console.ReadLine());
-
-            taxiFare = (2 * passengers);
-
-            taxiFare = taxiFare + (1.5 * kilometers);
-
-            Console.Write(taxiFare);
-
-            Console.ReadLine();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             BubbleSort bbsort = new BubbleSort();
 
@@ -201,4 +122,6 @@ namespace ALGOnDS
 
         }
     }
+
+    
 }
