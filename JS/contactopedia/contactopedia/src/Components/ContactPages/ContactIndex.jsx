@@ -127,7 +127,7 @@ class ContactIndex extends React.Component {
             }
         });
     }
-    handleUpdateClick = (contact) => {
+    handleUpdateCancel = () => {
         this.setState((previousState) => {
             return {
                 selectedContact: undefined,
@@ -135,6 +135,36 @@ class ContactIndex extends React.Component {
             }
         });
     }
+    handleUpdateContact = (updatedContact) => {
+        if (updatedContact.name == "") {
+            return { status: "failure", message: "Contact name needed" };
+        } else if (updatedContact.phone == "") {
+            return { status: "failure", message: "Contact phone needed" };
+        } else if (updatedContact.email == "") {
+            return { status: "failure", message: "Contact email needed" };
+        };
+
+        this.setState((previousState) => {
+            return {
+                contactList: previousState.contactList.map((contact) => {
+
+                    if (contact.id == updatedContact.id) {
+                        return {
+                            ...contact,
+                            name: updatedContact.name,
+                            email: updatedContact.email,
+                            phone: updatedContact.phone
+                        }
+                    }
+                    return contact;
+                }),
+                selectedContact: undefined,
+                isUpdating: false
+            };
+        });
+
+        return { status: "success", message: "Contact updated successfully" };
+    };
 
     render() {
         return (
@@ -154,6 +184,8 @@ class ContactIndex extends React.Component {
                                     isUpdating={this.state.isUpdating}
                                     selectedContact={this.state.selectedContact}
                                     handleUpdateClick={this.handleUpdateClick}
+                                    handleUpdateCancel={this.handleUpdateCancel}
+                                    handleUpdateContact={this.handleUpdateContact}
                                 />
                             </div>
                         </div>

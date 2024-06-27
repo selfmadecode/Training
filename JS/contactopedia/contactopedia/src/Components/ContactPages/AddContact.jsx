@@ -14,13 +14,20 @@ class AddContact extends React.Component {
         const name = e.target.elements.contactName.value.trim();
         const email = e.target.elements.contactEmail.value.trim();
         const phone = e.target.elements.contactPhone.value.trim();
+        const id = e.target.elements.contactId.value.trim();
 
         const newContact = {
             name,
             email,
             phone
         }
-        const response = this.props.handleAddContact(newContact);
+
+        let response = undefined;
+        if (this.props.isUpdating) {
+            response = this.props.handleUpdateContact({ ...newContact, id: id })
+        } else {
+            response = this.props.handleAddContact(newContact);
+        }
 
         if (response.status == "success") {
             this.setState({ errorMessage: "", successMessage: response.message });
@@ -30,10 +37,19 @@ class AddContact extends React.Component {
         }
     };
 
+    handleCancel = () => {
+        this.props.handleUpdateCancel();
+    }
+
     render() {
         return (
             <div className="border col-12 text-black p-2">
                 <form onSubmit={this.handleAddContactFormSubmit} className="contact-form">
+                    <input
+                        hidden
+                        name="contactId"
+                        defaultValue={this.props.isUpdating ? this.props.selectedContact.id : ""}
+                    ></input>
                     <div className="row p-2">
                         {/* {
                             this.props.isUpdating ? (<div className="col-12 text-black-50">Update Contact</div>)
@@ -105,7 +121,7 @@ class AddContact extends React.Component {
                             {
                                 this.props.isUpdating &&
                                 (
-                                    <button className="btn btn-secondary btn-sm form-control" onClick={this.props}>
+                                    <button className="btn btn-secondary btn-sm form-control" onClick={this.handleCancel}>
                                         Cancel
                                     </button>
                                 )
