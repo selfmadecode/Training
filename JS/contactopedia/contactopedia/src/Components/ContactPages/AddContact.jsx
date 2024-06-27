@@ -35,23 +35,31 @@ class AddContact extends React.Component {
             <div className="border col-12 text-black p-2">
                 <form onSubmit={this.handleAddContactFormSubmit} className="contact-form">
                     <div className="row p-2">
-                        <div className="col-12 text-black-50">Add a new Contact</div>
+                        {/* {
+                            this.props.isUpdating ? (<div className="col-12 text-black-50">Update Contact</div>)
+                                :
+                                (<div className="col-12 text-black-50">Add a new Contact</div>)
+                        } */}
+                        <div className="col-12 text-black-50" > {this.props.isUpdating ? "Update Contact" : "Add a new Contact"} </div>
                         <div className="col-12 col-md-4 p-1">
                             <input className="form-control form-control-sm"
                                 placeholder="Name:"
                                 name="contactName"
+                                defaultValue={this.props.isUpdating ? this.props.selectedContact.name : ""}
                             ></input>
                         </div>
                         <div className="col-12 col-md-4 p-1">
                             <input className="form-control form-control-sm"
                                 placeholder="Email:"
                                 name="contactEmail"
+                                defaultValue={this.props.isUpdating ? this.props.selectedContact.email : ""}
                             ></input>
                         </div>
                         <div className="col-12 col-md-4 p-1">
                             <input className="form-control form-control-sm"
                                 placeholder="Phone:"
                                 name="contactPhone"
+                                defaultValue={this.props.isUpdating ? this.props.selectedContact.phone : ""}
                             ></input>
                         </div>
                         {
@@ -72,9 +80,38 @@ class AddContact extends React.Component {
                                     </div>
                                 )
                         }
-                        <div className="col-12 col-md-6 offset-md-3 p-1">
-                            <button className="btn btn-primary btn-sm form-control"> Create </button>
+                        {/* {
+                            this.props.isUpdating ?
+                                (
+                                    <div className="row col-12 col-md-6 offset-md-3 p-1">
+                                        <button className="btn btn-success btn-sm form-control"> Update </button>
+                                        <button className="btn btn-danger btn-sm form-control"> Cancel </button>
+                                    </div>
+
+
+                                )
+                                :
+                                (
+                                    <div className="col-12 col-md-6 offset-md-3 p-1">
+                                        <button className="btn btn-primary btn-sm form-control"> Create </button>
+                                    </div>)
+                        } */}
+                        <div className={`col-12 p-1 ${this.props.isUpdating ? "col-md-4 offset-md-2" : "col-md-6 offset-md-3"}`}>
+                            <button className="btn btn-primary btn-sm form-control">
+                                {this.props.isUpdating ? "Update" : "Create"}
+                            </button>
                         </div>
+                        <div className="col-12 col-md-4 p-1">
+                            {
+                                this.props.isUpdating &&
+                                (
+                                    <button className="btn btn-secondary btn-sm form-control" onClick={this.props}>
+                                        Cancel
+                                    </button>
+                                )
+                            }
+                        </div>
+
                     </div>
                 </form>
             </div>
