@@ -38,9 +38,30 @@ class LifecyclopediaClassPage extends React.Component {
             }
         }
     }
-    componentDidUpdate() {
+    componentDidUpdate = async (previousProps, previousState) => {
         console.log("did update");
         localStorage.setItem("cyclopediastate", JSON.stringify(this.state));
+
+        if (previousState.studentCount < this.state.studentCount) {
+            const response = await getRandomUser();
+
+            this.setState((prevState) => {
+                return {
+                    studentList: [
+                        ...prevState.studentList, {
+                            name: response.data.first_name + " " + response.data.last_name
+                        }
+                    ]
+                }
+            })
+        }
+        else if (previousState.studentCount > this.state.studentCount) {
+            this.setState((prevState) => {
+                return {
+                    studentList: []
+                }
+            })
+        }
 
     }
     componentWillUnmount() {
@@ -81,7 +102,7 @@ class LifecyclopediaClassPage extends React.Component {
                     <i className={`bi ${this.state.hideInstructor ? "bi-toggle-off" : "bi-toggle-on"} btn btn-success btn-sm`} onClick={this.handleInstructorToggle}></i>
                     <br />
                     {
-                        !this.state.hideInstructor ? (
+                        !this.state.hideInstructor && this.state.instructor ? (
                             <Instructor instructor={this.state.instructor} />
                         ) : null
                     }
@@ -110,7 +131,19 @@ class LifecyclopediaClassPage extends React.Component {
                     <div>Student count: {this.state.studentCount}</div>
                     <button className="btn btn-success btn-sm" onClick={this.handleAddStudent}>Add Student </button> &nbsp;
                     <button className="btn btn-danger btn-sm" onClick={this.handleRemoveAllStudents}>Remove All Student </button>
+
+                    {
+                        this.state.studentList.map((student, index) => {
+                            return (
+                                <div className="text-black" key={index}>
+                                    - {student.name}
+                                </div>
+                            )
+                        })
+                    }
                 </div>
+
+
             </div>
         )
     }
